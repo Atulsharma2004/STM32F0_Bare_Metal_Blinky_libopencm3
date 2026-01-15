@@ -2,11 +2,63 @@
 
 A lightweight, bare-metal LED blinky project for the **NUCLEO-F072RB** (STM32F072RB). This project bypasses heavy IDEs like STM32CubeIDE in favor of a manual **Makefile** build system and the **libopencm3** firmware library.
 
-## Hardware
+Developing in this "No-IDE" environment provides a deep understanding of linker scripts, memory mapping, and the ARM GCC compilation pipeline.
 
-- **MCU:** STM32F072RBT6 (Cortex-M0)
+---
+
+## 🛠 Hardware & Environment
+
+### Hardware
+
+- **MCU:** STM32F072RBT6 (ARM Cortex-M0)
 - **Board:** NUCLEO-F072RB
 - **Debugger:** On-board ST-LINK/V2-1
+
+### Software Stack
+
+This project uses a "Linux-on-Windows" workflow to utilize professional CLI tools:
+
+- **OS:** Windows 11 with **WSL2 (Ubuntu)**
+- **Compiler:** `arm-none-eabi-gcc` (GNU Arm Embedded Toolchain)
+- **Build System:** GNU Make
+- **Flashing Tool:** OpenOCD
+- **Hardware Bridge:** `usbipd-win` (Connects Windows USB ports to the WSL2 kernel)
+
+---
+
+## 🔌 Connecting Hardware to WSL2 (Required for Flashing)
+
+WSL2 does not see USB devices by default. You must bridge your ST-LINK debugger from Windows to Ubuntu using `usbipd-win`.
+
+### 1. In Windows PowerShell (Administrator)
+
+Run these commands to share the device with WSL:
+
+```powershell
+# 1. List connected devices to find the Bus ID of the ST-LINK (e.g., 2-3)
+usbipd list
+
+# 2. Bind the device (Only required once per USB port)
+usbipd bind --busid <BUSID>
+
+# 3. Attach the device to WSL (Required every time you plug the board in)
+usbipd attach --wsl --busid <BUSID>
+```
+
+### 2. In WSL2 (Ubuntu Terminal)
+
+lsusb
+
+# You should see: Bus XXX Device XXX: ID 0483:374b STMicroelectronics ST-LINK/V2.1
+
+## Prerequisites
+
+Within your WSL/Ubuntu terminal, install the necessary tools:
+
+```bash
+sudo apt update
+sudo apt install gcc-arm-none-eabi binutils-arm-none-eabi libnewlib-arm-none-eabi make openocd
+```
 
 ## Key Features
 
@@ -14,12 +66,6 @@ A lightweight, bare-metal LED blinky project for the **NUCLEO-F072RB** (STM32F07
 - **Custom Linker Script:** Uses a memory-mapped linker script for precise flash/RAM control.
 - **Makefile Workflow:** Full control over compilation, linking, and flashing via OpenOCD.
 - **Library:** Powered by the open-source `libopencm3`.
-
-## Prerequisites
-
-- `arm-none-eabi-gcc`
-- `make`
-- `openocd`
 
 ## Setup & Build
 

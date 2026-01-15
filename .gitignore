@@ -1,7 +1,15 @@
+# Build Artifacts
 App/build/
 *.elf
 *.bin
 *.o
 
-libopencm3
-process_steps
+# Dependency build files (Submodule contents)
+# Note: We track the folder 'libopencm3' as a submodule, but ignore its build outputs
+libopencm3/**/*.o
+libopencm3/**/*.a
+libopencm3/**/*.d
+
+
+# Documentation & Local Notes
+process_steps.txt
