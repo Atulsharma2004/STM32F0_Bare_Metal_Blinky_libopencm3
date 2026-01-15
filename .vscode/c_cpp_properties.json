@@ -1,0 +1,30 @@
+{
+  "version": 4,
+  "configurations": [
+    {
+      "name": "STM32F072-libopencm3",
+      "compilerPath": "arm-none-eabi-gcc",
+      "intelliSenseMode": "gcc-arm",
+      "cStandard": "c11",
+      "cppStandard": "c++17",
+
+      "includePath": [
+        "${workspaceFolder}/src",
+        "${workspaceFolder}/libopencm3/include"
+      ],
+
+      "defines": [
+        "STM32F0",
+        "STM32F072xB",
+        "__ARM_ARCH_6M__"
+      ],
+
+      "browse": {
+        "path": [
+          "${workspaceFolder}/src",
+          "${workspaceFolder}/libopencm3/include"
+        ]
+      }
+    }
+  ]
+}

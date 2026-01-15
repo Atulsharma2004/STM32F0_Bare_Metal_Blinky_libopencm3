@@ -1,0 +1,18 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug STM32F072RB",
+      "type": "cortex-debug",
+      "request": "launch",
+      "servertype": "openocd",
+      "executable": "App/build/blink.elf",
+      "openocdPath": "C:/Program Files/OpenOCD/bin/openocd.exe",
+      "configFiles": [
+        "interface/stlink.cfg",
+        "target/stm32f0x.cfg"
+      ],
+      "runToEntryPoint": "main"
+    }
+  ]
+}

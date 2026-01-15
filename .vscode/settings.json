@@ -1,0 +1,18 @@
+{
+  "terminal.integrated.defaultProfile.windows": "MSYS2 MinGW64",
+
+  "files.associations": {
+    "*.h": "c",
+    "*.c": "c"
+  },
+
+  "makefile.makePath": "make",
+  "makefile.configureOnOpen": false,
+
+  "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools",
+
+  "cortex-debug.openocdPath": "openocd",
+  "cortex-debug.gdbPath": "arm-none-eabi-gdb",
+
+  "editor.formatOnSave": true
+}

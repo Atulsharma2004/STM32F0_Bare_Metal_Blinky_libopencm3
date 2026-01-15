@@ -1,0 +1,7 @@
+App/build/
+*.elf
+*.bin
+*.o
+
+libopencm3
+process_steps

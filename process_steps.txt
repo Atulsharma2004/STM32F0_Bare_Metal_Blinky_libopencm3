@@ -1,0 +1,75 @@
+🧩 What You’ll Build
+
+Bare-metal firmware using libopencm3
+
+Build with ARM GCC
+
+Flash & debug using ST-LINK (onboard) via OpenOCD
+
+Edit & debug inside VS Code
+
+🧰 Hardware & Software Required
+Hardware
+
+STMicroelectronics STM32 NUCLEO-F072RB
+
+USB cable (Mini-USB for ST-LINK)
+
+Software
+
+Install these in order:
+
+ARM Toolchain
+
+GNU Arm Embedded Toolchain
+
+Download: gcc-arm-none-eabi
+
+Build Tools
+
+Make (Windows: install via MSYS2 or Git Bash)
+
+Debug / Flash
+
+OpenOCD
+
+ST-LINK drivers (Windows only)
+
+IDE
+
+Visual Studio Code
+
+VS Code Extensions:
+
+C/C++
+
+Cortex-Debug
+
+Makefile Tools
+
+📁 Project Folder Structure
+stm32-f072-libopencm3/
+├── libopencm3/
+├── src/
+│   └── main.c
+├── Makefile
+└── .vscode/
+    ├── launch.json
+    └── settings.json
+
+    
+
+🔧 Option 2: WSL (Ubuntu)
+
+If you prefer Linux-style workflow:
+
+wsl --install
+
+
+Then inside Ubuntu:
+
+sudo apt update
+sudo apt install gcc-arm-none-eabi make git
+git clone https://github.com/libopencm3/libopencm3.git
+cd libopencm3
+make
