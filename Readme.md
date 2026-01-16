@@ -104,17 +104,17 @@ make flash
 
 - Understood:
 
-Linker script memory layout
+  - Linker script memory layout
 
-Startup flow: Reset → Vector Table → main()
+  - Startup flow: Reset → Vector Table → main()
 
 - Verified GPIO output by blinking the onboard LED using a busy-wait delay
 
 - Set up:
 
-OpenOCD flashing
+  - OpenOCD flashing
 
-ST-LINK access via WSL2
+  - ST-LINK access via WSL2
 
 # Outcome:
 
