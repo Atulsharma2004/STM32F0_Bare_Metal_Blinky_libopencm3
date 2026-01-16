@@ -12,4 +12,6 @@ libopencm3/**/*.d
 
 
 # Documentation & Local Notes
+
 process_steps.txt
+gdb_debug.txt

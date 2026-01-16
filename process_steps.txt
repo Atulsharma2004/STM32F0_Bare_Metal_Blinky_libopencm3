@@ -73,3 +73,22 @@ sudo apt install gcc-arm-none-eabi make git
 git clone https://github.com/libopencm3/libopencm3.git
 cd libopencm3
 make
+
+
+PS C:\Windows\system32> usbipd list
+Connected:
+BUSID  VID:PID    DEVICE                                                        STATE
+1-2    0483:374b  ST-Link Debug, USB Mass Storage Device, STMicroelectronic...  Shared
+1-5    05c8:03d2  HP TrueVision HD Camera                                       Not shared
+1-10   0bda:b00c  Realtek Bluetooth 5 Adapter                                   Not shared
+
+Persisted:
+GUID                                  DEVICE
+
+PS C:\Windows\system32> usbipd bind --busid 1-2
+usbipd: info: Device with busid '1-2' was already shared.
+PS C:\Windows\system32> usbipd attach --wsl --busid 1-2
+usbipd: info: Using WSL distribution 'Ubuntu' to attach; the device will be available in all WSL 2 distributions.
+usbipd: info: Loading vhci_hcd module.
+usbipd: info: Detected networking mode 'nat'.
+usbipd: info: Using IP address 172.31.0.1 to reach the host.

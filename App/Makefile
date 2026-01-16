@@ -62,7 +62,7 @@ LDFLAGS += -L$(LIBOPENCM3_DIR)/lib
 LDFLAGS += -lopencm3_stm32f0
 
 # Default target: build the .bin file
-all: $(BUILD_DIR)/$(PROJECT).bin
+all: $(BUILD_DIR)/$(PROJECT).elf
 
 # Rule 1: Create the build directory
 $(BUILD_DIR):
@@ -77,12 +77,16 @@ $(BUILD_DIR)/$(PROJECT).elf: $(OBJ)
 	$(CC) $(OBJ) $(LDFLAGS) -o $@
 
 # Rule 4: Convert .elf to .bin (The flashable file)
-$(BUILD_DIR)/$(PROJECT).bin: $(BUILD_DIR)/$(PROJECT).elf
-	$(OBJCOPY) -O binary $< $@
+# $(BUILD_DIR)/$(PROJECT).bin: $(BUILD_DIR)/$(PROJECT).elf
+# 	$(OBJCOPY) -O binary $< $@
 
-flash: $(BUILD_DIR)/$(PROJECT).bin
+# flash: $(BUILD_DIR)/$(PROJECT).bin
+# 	openocd -f $(OOCD_FILE) -f $(OOCD_TARGET) \
+# 	-c "program $< 0x08000000 verify reset exit"
+flash: $(BUILD_DIR)/$(PROJECT).elf
 	openocd -f $(OOCD_FILE) -f $(OOCD_TARGET) \
 	-c "program $< verify reset exit"
+
 
 clean:
 	rm -rf $(BUILD_DIR)
