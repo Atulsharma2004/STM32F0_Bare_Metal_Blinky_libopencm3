@@ -50,12 +50,24 @@ Makefile Tools
 📁 Project Folder Structure
 stm32-f072-libopencm3/
 ├── libopencm3/
-├── src/
-│   └── main.c
+├── App/
+│   ├── inc/
+│   │   ├── common-defines.h
+│   │   └── core/
+│   │       └── system.h
+|   |       └── timer.h
+│   └── src/
+│       ├── firmware.c
+│       └── core/
+│           └── system.c
+|           └── timer.h
+├── build/
 ├── Makefile
-└── .vscode/
-    ├── launch.json
-    └── settings.json
+├── linkerscript.ld
+├── .vscode/
+│   ├── launch.json
+│   └── settings.json
+└── .gitignore
 
     
 

@@ -96,7 +96,7 @@ make flash
 
 # 🧪 Learning Log
 
-## 📅 Day 1 – Bare-Metal Bring-Up
+## 📅 Level 1 – Bare-Metal Bring-Up
 
 ### What was implemented and learned:
 
@@ -120,7 +120,7 @@ ST-LINK access via WSL2
 
 Confirmed that the toolchain, linker script, and startup code were correct.
 
-## 📅 Day 2 – SysTick, Vector Table, and Real Debugging
+## 📅 Level 2 – SysTick, Vector Table, and Real Debugging
 
 **Focus:** Timekeeping, interrupts, and low-level debugging using VS Code + GDB.
 
@@ -139,25 +139,21 @@ Confirmed that the toolchain, linker script, and startup code were correct.
 # Bugs encountered and fixed
 
 - Vector table misplacement
-
   - Reset handler not executing
 
   - Fixed by forcing .vectors to ORIGIN(FLASH)
 
 - HardFault entering blocking_handler()
-
   - Caused by incorrect SysTick helper usage on Cortex-M0
 
   - Fixed by configuring SysTick registers manually
 
 - 64-bit tick counter issues
-
   - Learned that uint64_t is unsafe on Cortex-M0 without atomic protection
 
   - Migrated to uint32_t ticks
 
 - Debugger misconceptions
-
   - Learned that halting the CPU stops time
 
   - Timing logic must be validated outside breakpoints
@@ -167,7 +163,6 @@ Confirmed that the toolchain, linker script, and startup code were correct.
 - Attaching GDB to OpenOCD
 
 - Inspecting memory and registers:
-
   - Vector table at 0x08000000
 
   - SysTick registers (CTRL, LOAD, VAL)
@@ -181,3 +176,57 @@ Confirmed that the toolchain, linker script, and startup code were correct.
 # Outcome:
 
 A stable SysTick-based LED blink and a deeper understanding of Cortex-M0 startup, interrupts, and debugging.
+
+## 📅 Level 3 – Timer PWM & Hardware Debugging
+
+**Focus:** PWM generation using hardware timers and real peripheral debugging.
+
+# What was implemented
+
+- Configured TIM2 for PWM using libopencm3
+- Set GPIO to Alternate Function mode for timer output
+- Implemented duty cycle control (0–100%) using CCR
+- Created LED breathing effect using SysTick (non-blocking)
+
+# Key learnings
+
+- PWM is hardware-driven, no CPU blocking required
+- Duty cycle controlled via:
+  - CCR = (ARR × duty) / 100
+- Importance of:
+  - Correct GPIO AF mapping
+  - Timer configuration (PSC, ARR)
+  - Preload for stable PWM updates
+
+# Bugs encountered and fixed
+
+- ❌ PWM not working
+  - Wrong AF mapping
+  - Fixed using correct timer-pin configuration
+- ❌ Wrong clock assumption
+  - Used 84 MHz instead of 48 MHz
+    ```bash
+    rcc_clock_setup_in_hsi_out_48mhz();
+    ```
+  - Fixed based on RCC config
+- ❌ Misused advanced timer feature
+  - Removed (not valid for TIM2)
+  ```bash
+  timer_enable_break_main_output(TIM2);
+  ```
+- ❌ Unstable PWM updates
+  - Missing preload
+  - Fixed with OC + ARR preload
+- ❌ Slow LED fading
+  - Large update interval
+  - Adjusted using SysTick
+
+# Debugging skills gained
+
+- Verified timer output via register-level reasoning
+- Understood timer types (basic vs general vs advanced)
+- Debugged hardware issues without IDE abstraction
+
+# Outcome:
+
+Working hardware PWM-based LED fading and solid understanding of timers and debugging.

@@ -38,9 +38,17 @@
 
 PROJECT = blink
 BUILD_DIR = build
-SRC = src/firmware.c
-# Convert source paths to object paths in the build directory
-OBJ = $(BUILD_DIR)/firmware.o
+APP_DIR     = .
+
+
+# Source files
+SRC = \
+	$(APP_DIR)/src/firmware.c \
+	$(APP_DIR)/src/core/system.c \
+	$(APP_DIR)/src/core/timer.c
+
+# Convert src paths to build object paths
+OBJ = $(SRC:$(APP_DIR)/src/%.c=$(BUILD_DIR)/%.o)
 
 LIBOPENCM3_DIR = ../libopencm3
 DEVICE = stm32f0
@@ -53,6 +61,8 @@ OBJCOPY = arm-none-eabi-objcopy
 CFLAGS = -Os -Wall -g
 CFLAGS += -mcpu=cortex-m0 -mthumb
 CFLAGS += -DSTM32F0
+CFLAGS += -I$(APP_DIR)/inc
+CFLAGS += -I$(APP_DIR)/inc/core
 # FIX: Added -Iinc to find your local headers
 CFLAGS += -Iinc -I$(LIBOPENCM3_DIR)/include
 
@@ -61,6 +71,9 @@ LDFLAGS += -nostartfiles -Wl,--gc-sections
 LDFLAGS += -L$(LIBOPENCM3_DIR)/lib
 LDFLAGS += -lopencm3_stm32f0
 
+
+# ===================== TARGETS =====================
+
 # Default target: build the .bin file
 all: $(BUILD_DIR)/$(PROJECT).elf
 
@@ -68,8 +81,13 @@ all: $(BUILD_DIR)/$(PROJECT).elf
 $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
 
-# Rule 2: Compile .c files into .o object files
-$(BUILD_DIR)/%.o: src/%.c | $(BUILD_DIR)
+# # Rule 2: Compile .c files into .o object files
+# $(BUILD_DIR)/%.o: src/%.c | $(BUILD_DIR)
+# 	$(CC) $(CFLAGS) -c $< -o $@
+
+# Compile source files (handles subfolders)
+$(BUILD_DIR)/%.o: $(APP_DIR)/src/%.c
+	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Rule 3: Link .o files into .elf executable
