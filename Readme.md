@@ -211,9 +211,9 @@ A stable SysTick-based LED blink and a deeper understanding of Cortex-M0 startup
   - Fixed based on RCC config
 - ❌ Misused advanced timer feature
   - Removed (not valid for TIM2)
-  ```bash
-  timer_enable_break_main_output(TIM2);
-  ```
+    ```bash
+    timer_enable_break_main_output(TIM2);
+    ```
 - ❌ Unstable PWM updates
   - Missing preload
   - Fixed with OC + ARR preload
